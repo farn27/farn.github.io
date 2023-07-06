@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Menu List</title>
+</head>
+
+<body class="bg-gray-100">
+  <div class="container mx-auto p-8">
+    <h2 class="text-2xl font-bold mb-4">Menu List</h2>
+    <ul class="space-y-4" id="menu-list">
+      <li class=" hover:bg-blue-50 shadow-sm hover:shadow-md cursor-pointer rounded-md p-4 flex justify-between items-center" data-price="15000">
+        <span class="font-bold">Bakso</span>
+        <span class="text-gray-600">Rp 15,000</span>
+      </li>
+      <li class=" hover:bg-blue-50 shadow-sm hover:shadow-md cursor-pointer rounded-md p-4 flex justify-between items-center" data-price="20000">
+        <span class="font-bold">Nasgor</span>
+        <span class="text-gray-600">Rp 20,000</span>
+      </li>
+      <li class=" hover:bg-blue-50 shadow-sm hover:shadow-md cursor-pointer rounded-md p-4 flex justify-between items-center" data-price="10000">
+        <span class="font-bold">Wedang Jahe</span>
+        <span class="text-gray-600">Rp 10,000</span>
+      </li>
+    </ul>
+    <div class="mt-4 flex justify-between items-center">
+      <span class="font-bold">Total</span>
+      <span class="text-2xl font-bold text-gray-800" id="total-price">Rp 0</span>
+    </div>
+  </div>
+
+  <script>
+    const menuList = document.getElementById('menu-list');
+    const totalPriceElement = document.getElementById('total-price');
+
+    let totalPrice = 0;
+    const selectedItems = [];
+
+    menuList.addEventListener('click', function(event) {
+      const listItem = event.target.closest('li');
+
+      if (listItem) {
+        const price = parseInt(listItem.getAttribute('data-price'));
+        if (listItem.classList.contains('bg-green-100')) {
+          listItem.classList.remove('bg-green-100');
+          const index = selectedItems.indexOf(listItem);
+          if (index > -1) {
+            selectedItems.splice(index, 1);
+          }
+          totalPrice -= price;
+        } else {
+          listItem.classList.add('bg-green-100');
+          selectedItems.push(listItem);
+          totalPrice += price;
+        }
+        totalPriceElement.textContent = `Rp ${totalPrice}`;
+      }
+    });
+  </script>
+</body>
+
+</html>
